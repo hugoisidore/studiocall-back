@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-// Route de base
+// Route for testing
 app.get('/', (req, res) => {
   res.send('Hello StudioCall !!!!!!!');
 });
