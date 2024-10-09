@@ -18,5 +18,8 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {
+    "eslint": "^9.12.0"
+  }
 }
