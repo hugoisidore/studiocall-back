@@ -7,7 +7,9 @@ User.init({
     username: {
         type: DataTypes.TEXT,
         allowNull: false,
-    },
+    }},
+{
     sequelize,
     tableName:"user"
+
 });
