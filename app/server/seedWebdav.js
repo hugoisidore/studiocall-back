@@ -16,12 +16,13 @@ async function seedMusicAndVoices() {
 
         // Insérer les informations du fichier dans la table `music`
         await sequelize.query(`
-          INSERT INTO music (music_category, music_title, file_music, created_at, updated_at) 
-          VALUES ('Pop', '${file.basename}', '${filePath}', NOW(), NOW())
-        `);
+            INSERT INTO music (music_category, music_title, file_music, created_at, updated_at) 
+            VALUES (?, ?, ?, NOW(), NOW())
+          `, {
+            replacements: ['Pop', file.basename, filePath]
+          });
+        }
       }
-    }
-
     // Parcourt les fichiers de voix et les insère dans la table 'voice'
     for (const file of voiceFiles) {
       if (file.type === 'file') {
@@ -30,11 +31,13 @@ async function seedMusicAndVoices() {
 
         // Insérer les informations du fichier dans la table `voice`
         await sequelize.query(`
-          INSERT INTO voice (voice_category, voice_title, file_voice, created_at, updated_at) 
-          VALUES ('Femmes', '${file.basename}', '${filePath}', NOW(), NOW())
-        `);
+            INSERT INTO voice (voice_category, voice_title, file_voice, created_at, updated_at) 
+            VALUES (?, ?, ?, NOW(), NOW())
+          `, {
+            replacements: ['Femmes', file.basename, filePath]
+          });
+        }
       }
-    }
 
     console.log('Seeding terminé avec succès.');
   } catch (error) {
