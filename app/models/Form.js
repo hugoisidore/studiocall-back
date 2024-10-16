@@ -13,7 +13,7 @@ Form.init({
         allowNull: false,
     },
     company_postal_adress: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.TEXT,
         allowNull: false,
     },
     email: {
@@ -21,9 +21,8 @@ Form.init({
         allowNull: false,
     },
     telephone_number: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
-        unique: true
     },
     installer_name: {
         type: DataTypes.TEXT,
@@ -32,13 +31,12 @@ Form.init({
     studiocall_interlocutor: {
         type: DataTypes.TEXT,
         allowNull: false,
-        unique: true
     },
     file_reference: {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    user_id:{
+    user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
     }},

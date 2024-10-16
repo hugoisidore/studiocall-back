@@ -19,16 +19,41 @@ User.hasMany(Form,{
 
 //Voice 
 Voice.belongsToMany(User,{
-    as:"users",
+    as:"users_voice",
     through:"user_voice",
     foreignKey:"voice_id"
 });
 
 User.belongsToMany(Voice,{
-    as:"voices",
+    as:"voices_user",
     through:"user_voice",
     foreignKey:"user_id"
 });
 
+//Music
+Music.belongsToMany(User,{
+    as:"users_music",
+    through:"user_music",
+    foreignKey:"music_id"
+});
 
-export { Voice, sequelize };
+User.belongsToMany(Music,{
+    as:"musics_user",
+    through:"user_music",
+    foreignKey:"user_id"
+});
+
+//Text
+Text.belongsToMany(User,{
+    as:"users_text",
+    through:"user_text",
+    foreignKey:"text_id"
+});
+
+User.belongsToMany(Text,{
+    as:"texts_user",
+    through:"user_text",
+    foreignKey:"user_id"
+});
+
+export { Voice, Music, Text, Form, User, sequelize };
