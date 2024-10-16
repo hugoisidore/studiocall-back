@@ -28,6 +28,7 @@ CREATE TABLE "music" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "music_category" TEXT NOT NULL,
     "music_title" TEXT NOT NULL,
+    "file_music" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ NOT NULL default(now()),
     "updated_at" TIMESTAMPTZ
 );
@@ -44,6 +45,7 @@ CREATE TABLE "voice" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "voice_category" TEXT NOT NULL,
     "voice_title" TEXT NOT NULL,
+    "file_voice" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ NOT NULL default(now()),
     "updated_at" TIMESTAMPTZ
 );

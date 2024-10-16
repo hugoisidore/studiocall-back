@@ -11,6 +11,10 @@ Music.init({
   music_title: {
     type: DataTypes.TEXT,
     allowNull: false,
+  },
+  file_music: {
+    type: DataTypes.TEXT,
+    allowNull: false,
   }},
 {
   sequelize,

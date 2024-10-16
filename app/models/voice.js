@@ -11,6 +11,10 @@ Voice.init({
   voice_title: {
     type: DataTypes.TEXT,
     allowNull: false,
+  },
+  file_voice: {
+    type: DataTypes.TEXT,
+    allowNull: false,
   }},
 {
   sequelize,
