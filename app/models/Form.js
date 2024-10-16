@@ -20,7 +20,7 @@ Form.init({
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    telephone_number: {
+    phone_number: {
         type: DataTypes.STRING,
         allowNull: false,
     },
