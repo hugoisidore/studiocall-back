@@ -1,4 +1,4 @@
-import { Voice } from "./voice.js";
+import { Voice } from "./Voice.js";
 import { Music } from "./music.js";
 import { Text } from "./text.js";
 import { Form } from "./form.js";
