@@ -1,20 +1,19 @@
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "./sequelizeClient.js";
 
-export class Voice extends Model {}
+export class UserVoice extends Model {}
 
-Voice.init({
-  voice_category: {
-    type: DataTypes.TEXT,
+UserVoice.init({
+  user_id: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
-  voice_title: {
-    type: DataTypes.TEXT,
+  voice_id: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   }},
 {
   sequelize,
-  tableName:"voice"
+  tableName:"user_voice"
     
 });
-
