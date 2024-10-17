@@ -1,17 +1,17 @@
 import client from './webdavClient.js';  
 import { sequelize } from '../models/sequelizeClient.js';  
 
-// Fonction pour récupérer les fichiers d'un dossier WebDAV et les insérer dans la base de données
+// Fonction pour récupérer les fichiers du dossier WebDAV et les insérer dans la BDD
 async function seedMusicAndVoices() {
   try {
-    // Récupère les fichiers du dossier Musique et Voix sur WebDAV
+    // Récupèrer les fichiers du dossier Musique et Voix sur WebDAV
     const musicFiles = await client.getDirectoryContents('/Musiquestest');
     const voiceFiles = await client.getDirectoryContents('/Voixtest');
 
-    // Parcourt les fichiers de musique et les insère dans la table 'music'
+    // Parcourir les fichiers de musique et les insère dans la table 'music'
     for (const file of musicFiles) {
       if (file.type === 'file') {
-        // Vérifie si une musique avec le même titre existe déjà dans la base de données
+        // Vérifier si une musique avec le même titre existe déjà dans la BDD
         const [existingMusic] = await sequelize.query(`
           SELECT * FROM music WHERE music_title = ?
         `, {
@@ -37,10 +37,10 @@ async function seedMusicAndVoices() {
       }
     }
 
-    // Parcourt les fichiers de voix et les insère dans la table 'voice'
+    // Parcourir les fichiers de voix et les insère dans la table 'voice'
     for (const file of voiceFiles) {
       if (file.type === 'file') {
-        // Vérifie si une voix avec le même titre existe déjà dans la base de données
+        // Vérifier si une voix avec le même titre existe déjà dans la BDD
         const [existingVoice] = await sequelize.query(`
           SELECT * FROM voice WHERE voice_title = ?
         `, {
@@ -72,5 +72,5 @@ async function seedMusicAndVoices() {
   }
 }
 
-// Exécuter le script de seeding
+// On exécute le script de seeding
 seedMusicAndVoices();
