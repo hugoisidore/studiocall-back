@@ -1,75 +1,84 @@
 import client from './webdavClient.js';  
 import { sequelize } from '../models/sequelizeClient.js';  
+import path from 'path';  
+
+// Fonction pour récupérer tous les fichiers d'un dossier, y compris ceux des sous-dossiers
+async function getAllFiles(directory) {
+    let allFiles = [];
+    const contents = await client.getDirectoryContents(directory);
+
+    for (const item of contents) {
+        if (item.type === 'file') {
+            allFiles.push(item); 
+        } else if (item.type === 'collection') { 
+            // On appelle récursivement cette fonction pour les sous-dossiers
+            const subFiles = await getAllFiles(item.filename);
+            allFiles = allFiles.concat(subFiles); 
+        }
+    }
+
+    return allFiles; 
+}
 
 // Fonction pour récupérer les fichiers du dossier WebDAV et les insérer dans la BDD
 async function seedMusicAndVoices() {
-  try {
-    // Récupèrer les fichiers du dossier Musique et Voix sur WebDAV
-    const musicFiles = await client.getDirectoryContents('/Musiquestest');
-    const voiceFiles = await client.getDirectoryContents('/Voixtest');
+    try {
+        // Récupérer le contenu du dossier Musiquestest
+        const categories = await client.getDirectoryContents('/Musiquestest');
+        
+        console.log('Contenu de /Musiquestest :', categories); 
 
-    // Parcourir les fichiers de musique et les insère dans la table 'music'
-    for (const file of musicFiles) {
-      if (file.type === 'file') {
-        // Vérifier si une musique avec le même titre existe déjà dans la BDD
-        const [existingMusic] = await sequelize.query(`
-          SELECT * FROM music WHERE music_title = ?
-        `, {
-          replacements: [file.basename]
-        });
+        for (const categoryDir of categories) {
+            // S'assurer que nous traitons les éléments de type 'directory' (ou collection)
+            if (categoryDir.type === 'directory' || categoryDir.type === 'collection') { 
+                const categoryName = categoryDir.basename; 
+                console.log(`Exploration de la catégorie : ${categoryName}`);
 
-        // Si la musique n'existe pas, on l'insère
-        if (existingMusic.length === 0) {
-          const filePath = `https://cloud.studiocall.fr/remote.php/dav/files/AISTUDIOCALL/Musiquestest/${file.basename}`;
+                // Récupérer tous les fichiers dans le sous-dossier de la catégorie
+                const musicFiles = await getAllFiles(categoryDir.filename); 
+                console.log(`Fichiers trouvés dans la catégorie ${categoryName}:`, musicFiles.length);
 
-          // Insérer les informations du fichier dans la table `music`
-          await sequelize.query(`
-            INSERT INTO music (music_category, music_title, file_music, created_at, updated_at) 
-            VALUES (?, ?, ?, NOW(), NOW())
-          `, {
-            replacements: ['Pop', file.basename, filePath]
-          });
+                // Parcourir les fichiers de musique et les insérer dans la table 'music'
+                for (const file of musicFiles) {
+                    if (file.type === 'file') {
+                        console.log(`Traitement du fichier : ${file.basename}`); 
 
-          console.log(`Musique ajoutée: ${file.basename}`);
-        } else {
-          console.log(`Musique déjà présente: ${file.basename}, skipping.`);
+                        // Vérifier si une musique avec le même titre existe déjà dans la BDD
+                        const [existingMusic] = await sequelize.query(`
+                            SELECT * FROM music WHERE music_title = ?
+                        `, {
+                            replacements: [file.basename]
+                        });
+
+                        // Si la musique n'existe pas, on l'insère
+                        if (existingMusic.length === 0) {
+                            const filePath = `https://cloud.studiocall.fr/remote.php/dav/files/AISTUDIOCALL/Musiquestest/${categoryName}/${file.basename}`;
+
+                            // Insérer les informations du fichier dans la table `music`
+                            await sequelize.query(`
+                                INSERT INTO music (music_category, music_title, file_music, created_at, updated_at) 
+                                VALUES (?, ?, ?, NOW(), NOW())
+                            `, {
+                                replacements: [categoryName, file.basename, filePath]
+                            });
+
+                            console.log(`Musique ajoutée: ${file.basename}, catégorie: ${categoryName}`);
+                        } else {
+                            console.log(`Musique déjà présente: ${file.basename}, skipping.`);
+                        }
+                    } else {
+                        console.log(`Élément ignoré : ${file.basename} (pas un fichier)`); 
+                    }
+                }
+            } else {
+                console.log(`Élément ignoré : ${categoryDir.basename} (pas un dossier)`); 
+            }
         }
-      }
+
+        console.log('Seeding terminé avec succès.');
+    } catch (error) {
+        console.error('Erreur lors du seeding :', error);
     }
-
-    // Parcourir les fichiers de voix et les insère dans la table 'voice'
-    for (const file of voiceFiles) {
-      if (file.type === 'file') {
-        // Vérifier si une voix avec le même titre existe déjà dans la BDD
-        const [existingVoice] = await sequelize.query(`
-          SELECT * FROM voice WHERE voice_title = ?
-        `, {
-          replacements: [file.basename]
-        });
-
-        // Si la voix n'existe pas, on l'insère
-        if (existingVoice.length === 0) {
-          const filePath = `https://cloud.studiocall.fr/remote.php/dav/files/AISTUDIOCALL/Voixtest/${file.basename}`;
-
-          // Insérer les informations du fichier dans la table `voice`
-          await sequelize.query(`
-            INSERT INTO voice (voice_category, voice_title, file_voice, created_at, updated_at) 
-            VALUES (?, ?, ?, NOW(), NOW())
-          `, {
-            replacements: ['Femmes', file.basename, filePath]
-          });
-
-          console.log(`Voix ajoutée: ${file.basename}`);
-        } else {
-          console.log(`Voix déjà présente: ${file.basename}, skipping.`);
-        }
-      }
-    }
-
-    console.log('Seeding terminé avec succès.');
-  } catch (error) {
-    console.error('Erreur lors du seeding :', error);
-  }
 }
 
 // On exécute le script de seeding
