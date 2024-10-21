@@ -1,6 +1,5 @@
 import client from './webdavClient.js';  
 import { sequelize } from '../models/sequelizeClient.js';  
-import path from 'path';  
 
 // Fonction pour récupérer tous les fichiers d'un dossier, y compris ceux des sous-dossiers
 async function getAllFiles(directory) {

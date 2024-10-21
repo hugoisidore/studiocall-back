@@ -1,11 +1,10 @@
 import express from "express";
-import messageRouter from "./messages.router.js";
-import musicRouter from "./musics.router.js";
+import messagesRouter from "./messages.router.js";
+import musicsRouter from "./musics.router.js";
 
 const router = express.Router();
 
-router.use("/message", messageRouter);
-
-router.use("/music", musicRouter);
+router.use("/messages", messagesRouter);
+router.use("/musics", musicsRouter);
 
 export default router;
