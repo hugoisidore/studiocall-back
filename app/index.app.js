@@ -5,7 +5,7 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
-//Recréer __diranme dans un module ES
+//Recréer __dirname dans un module ES
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -28,11 +28,6 @@ app.use('/public', express.static(path.join(__dirname, "../../studiocall-front/s
 app.use('/assets', express.static(path.join(__dirname, "../../studiocall-front/src/assets")));
 
 app.use(router);
-
-//Pour Render la vue home.ejs
-app.get('/', (req, res) => {
-  res.render('home'); 
-});
 
 //Gestion d'erreurs 404
 app.use((req, res) => {
