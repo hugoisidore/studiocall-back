@@ -1,16 +1,16 @@
 const messagesController = {
     getCreateStandardMessage: (req, res) => {
-        res.json({
-            type: "standard",
-            title: "Create Standard Message",
-            data: { /* any additional data you want to send */ }
+        res.render('createStandard', { 
+            type: "standard", 
+            title: "Create Standard Message", 
+            data: {} // On peut ajouter ici des données à passer à la vue
         });
     },
     getCreateSmartphoneMessage: (req, res) => {
-        res.json({
-            type: "smartphone",
-            title: "Create Smartphone Message",
-            data: { /* any additional data you want to send */ }
+        res.render('createSmartphone', { 
+            type: "smartphone", 
+            title: "Create Smartphone Message", 
+            data: {} // On peut ajouter ici des données à passer à la vue
         });
     }
 };
