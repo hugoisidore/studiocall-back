@@ -29,9 +29,4 @@ app.use('/assets', express.static(path.join(__dirname, "../../studiocall-front/s
 
 app.use(router);
 
-//Gestion d'erreurs 404
-app.use((req, res) => {
-  res.status(404).render('error404');
-});
-
 export default app;
