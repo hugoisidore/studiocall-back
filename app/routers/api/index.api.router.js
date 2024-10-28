@@ -4,6 +4,7 @@ import musicsRouter from "./musics.router.js";
 import sacemRouter from "./sacem.router.js";
 import aboutRouter from "./about.router.js";
 import partnersRouter from "./partners.router.js";
+import advisorRouter from "./advisor.router.js";
 
 const router = express.Router();
 
@@ -12,5 +13,6 @@ router.use("/sacem", sacemRouter);
 router.use("/about", aboutRouter);
 router.use("/musics", musicsRouter);
 router.use("/becoming", partnersRouter);
+router.use("/advisor", advisorRouter);
 
 export default router;
