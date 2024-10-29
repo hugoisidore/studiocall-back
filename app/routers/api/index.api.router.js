@@ -12,5 +12,7 @@ router.use("/messages", messagesRouter);
 router.use("/sacem", sacemRouter);
 router.use("/about", aboutRouter);
 router.use("/musics", musicsRouter);
+router.use("/becoming", partnersRouter);
+router.use("/advisor", advisorRouter);
 
 export default router;
