@@ -6,14 +6,15 @@ import footerRouter from "./api/footer.router.js";
 
 const router = express.Router();
 
+// general
+router.use("/", homeRouter);
+router.use("/api", apiRouter);
+router.use("*", errorRouter);
+
 // footer
 router.use("/legal", footerRouter);
 router.use("/rgpd", footerRouter);
 router.use("/site", footerRouter);
 router.use("/contact", footerRouter);
-
-router.use("/", homeRouter);
-router.use("/api", apiRouter);
-router.use("*", errorRouter);
 
 export default router;
