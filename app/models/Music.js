@@ -22,3 +22,5 @@ Music.init({
     
 });
 
+export default Music; // Ajoutez cette ligne pour exporter par défaut la classe Music
+
