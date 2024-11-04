@@ -4,8 +4,8 @@ DROP TABLE IF EXISTS "user", "password", "product", "form", "music", "text", "vo
 
 CREATE TABLE "user" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" TEXT NOT NULL,
-    "role" TEXT NOT NULL,
+    "name" TEXT NULL,
+    "role" TEXT NULL,
     "password_id" int NOT NULL REFERENCES "password"("id") ON DELETE CASCADE,
     "created_at" TIMESTAMPTZ NOT NULL default(now()),
     "updated_at" TIMESTAMPTZ
@@ -13,9 +13,9 @@ CREATE TABLE "user" (
 
 CREATE TABLE "password" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "password_title" TEXT NOT NULL,
-    "password_text" TEXT NOT NULL,
-    "created_at" TIMESTAMPTZ NOT NULL default(now()),
+    "password_title" TEXT NULL,
+    "password_text" TEXT NULL,
+    "created_at" TIMESTAMPTZ default(now()),
     "updated_at" TIMESTAMPTZ
 );
 
@@ -24,9 +24,9 @@ CREATE TABLE "product" (
     "product_name" TEXT NOT NULL,
     "product_description" TEXT NOT NULL,
     "product_price" TEXT NOT NULL,
-    "product_image" TEXT NOT NULL,
-    "created_at" TIMESTAMPTZ NOT NULL default(now()),
-    "updated_at" TIMESTAMPTZ
+    "product_image" TEXT NULL,
+    "created_at" TIMESTAMPTZ NULL default(now()),
+    "updated_at" TIMESTAMPTZ NULL
 );
 
 CREATE TABLE "form" (
