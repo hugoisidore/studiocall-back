@@ -4,8 +4,8 @@ DROP TABLE IF EXISTS "user", "password", "product", "form", "music", "text", "vo
 
 CREATE TABLE "user" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" TEXT NULL,
-    "role" TEXT NULL,
+    "user_name" TEXT NULL,
+    "user_role" TEXT NULL,
     "password_id" int NOT NULL REFERENCES "password"("id") ON DELETE CASCADE,
     "created_at" TIMESTAMPTZ NOT NULL default(now()),
     "updated_at" TIMESTAMPTZ
