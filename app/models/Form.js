@@ -46,3 +46,4 @@ Form.init({
       
 });
 
+export default Form;
