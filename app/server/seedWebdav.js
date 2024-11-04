@@ -1,7 +1,6 @@
 import client from './webdavClient.js';  
 import { sequelize } from '../models/sequelizeClient.js';  
 
-// Fonction pour récupérer tous les fichiers d'un dossier, y compris ceux des sous-dossiers
 async function getAllFiles(directory) {
     let allFiles = [];
     const contents = await client.getDirectoryContents(directory);
@@ -10,7 +9,6 @@ async function getAllFiles(directory) {
         if (item.type === 'file') {
             allFiles.push(item); 
         } else if (item.type === 'collection') { 
-            // On appelle récursivement cette fonction pour les sous-dossiers
             const subFiles = await getAllFiles(item.filename);
             allFiles = allFiles.concat(subFiles); 
         }
@@ -19,59 +17,93 @@ async function getAllFiles(directory) {
     return allFiles; 
 }
 
-// Fonction pour récupérer les fichiers du dossier WebDAV et les insérer dans la BDD
 async function seedMusicAndVoices() {
     try {
-        // Récupérer le contenu du dossier Musiquestest
+        // Récupérer toutes les catégories de musique actuellement dans la base de données
+        const [existingCategoriesResult] = await sequelize.query(`SELECT DISTINCT music_category FROM music`);
+        const existingCategories = existingCategoriesResult.map(row => row.music_category);
+
+        // Récupérer les catégories actuelles du serveur cloud
         const categories = await client.getDirectoryContents('/Musiquestest');
-        
-        console.log('Contenu de /Musiquestest :', categories); 
+        console.log('Contenu de /Musiquestest :', categories);
+
+        // Liste des catégories trouvées dans le cloud
+        const cloudCategories = [];
 
         for (const categoryDir of categories) {
-            // S'assurer que nous traitons les éléments de type 'directory' (ou collection)
-            if (categoryDir.type === 'directory' || categoryDir.type === 'collection') { 
-                const categoryName = categoryDir.basename; 
+            if (categoryDir.type === 'directory' || categoryDir.type === 'collection') {
+                const categoryName = categoryDir.basename;
+                cloudCategories.push(categoryName); // Ajouter à la liste des catégories du cloud
                 console.log(`Exploration de la catégorie : ${categoryName}`);
 
                 // Récupérer tous les fichiers dans le sous-dossier de la catégorie
-                const musicFiles = await getAllFiles(categoryDir.filename); 
+                const musicFiles = await getAllFiles(categoryDir.filename);
                 console.log(`Fichiers trouvés dans la catégorie ${categoryName}:`, musicFiles.length);
 
-                // Parcourir les fichiers de musique et les insérer dans la table 'music'
+                const processedFiles = [];
+
                 for (const file of musicFiles) {
                     if (file.type === 'file') {
-                        console.log(`Traitement du fichier : ${file.basename}`); 
-
-                        // Vérifier si une musique avec le même titre existe déjà dans la BDD
+                        console.log(`Traitement du fichier : ${file.basename}`);
+                        
                         const [existingMusic] = await sequelize.query(`
                             SELECT * FROM music WHERE music_title = ?
                         `, {
                             replacements: [file.basename]
                         });
 
-                        // Si la musique n'existe pas, on l'insère
-                        if (existingMusic.length === 0) {
-                            const filePath = `https://cloud.studiocall.fr/remote.php/dav/files/AISTUDIOCALL/Musiquestest/${categoryName}/${file.basename}`;
+                        const filePath = `https://cloud.studiocall.fr/remote.php/dav/files/AISTUDIOCALL/Musiquestest/${categoryName}/${file.basename}`;
+                        processedFiles.push(file.basename);
 
-                            // Insérer les informations du fichier dans la table `music`
+                        if (existingMusic.length === 0) {
                             await sequelize.query(`
                                 INSERT INTO music (music_category, music_title, file_music, created_at, updated_at) 
                                 VALUES (?, ?, ?, NOW(), NOW())
                             `, {
                                 replacements: [categoryName, file.basename, filePath]
                             });
-
                             console.log(`Musique ajoutée: ${file.basename}, catégorie: ${categoryName}`);
                         } else {
-                            console.log(`Musique déjà présente: ${file.basename}, skipping.`);
+                            // Mise à jour des informations si le fichier existe déjà
+                            await sequelize.query(`
+                                UPDATE music 
+                                SET music_category = ?, file_music = ?, updated_at = NOW()
+                                WHERE music_title = ?
+                            `, {
+                                replacements: [categoryName, filePath, file.basename]
+                            });
+                            console.log(`Musique mise à jour : ${file.basename}, catégorie: ${categoryName}`);
                         }
                     } else {
                         console.log(`Élément ignoré : ${file.basename} (pas un fichier)`); 
                     }
                 }
+
+                const placeholders = processedFiles.map(() => '?').join(', ');
+                await sequelize.query(`
+                    DELETE FROM music 
+                    WHERE music_category = ? AND music_title NOT IN (${placeholders})
+                `, {
+                    replacements: [categoryName, ...processedFiles]
+                });
+
+                console.log(`Catégorie ${categoryName} mise à jour avec suppression des fichiers obsolètes.`);
             } else {
                 console.log(`Élément ignoré : ${categoryDir.basename} (pas un dossier)`); 
             }
+        }
+
+        // Supprimer les catégories absentes du cloud mais présentes dans la BDD
+        const categoriesToDelete = existingCategories.filter(cat => !cloudCategories.includes(cat));
+        if (categoriesToDelete.length > 0) {
+            const placeholders = categoriesToDelete.map(() => '?').join(', ');
+            await sequelize.query(`
+                DELETE FROM music 
+                WHERE music_category IN (${placeholders})
+            `, {
+                replacements: categoriesToDelete
+            });
+            console.log(`Catégories supprimées de la BDD : ${categoriesToDelete.join(', ')}`);
         }
 
         console.log('Seeding terminé avec succès.');
@@ -80,5 +112,5 @@ async function seedMusicAndVoices() {
     }
 }
 
-// On exécute le script de seeding
+// Exécute le script de seeding
 seedMusicAndVoices();
