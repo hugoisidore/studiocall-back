@@ -10,15 +10,13 @@ Product.init({
   },
   product_description: {
     type: DataTypes.TEXT,
-    allowNull: false,
   },
   product_price: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
   product_image: {
-    type: DataTypes.TEXT,
-    allowNull: false, 
+    type: DataTypes.TEXT,  
   }},
 {
   sequelize,

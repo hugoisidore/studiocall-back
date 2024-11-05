@@ -4,13 +4,19 @@ import { Product } from "../models/Product.js";
 const sacemController = {
   async getSacemPage(req, res, next) {
     try {
-      return res.render('sacemAndPrices'); 
+      const products = await Product.findAll();
+
+      if (products.length === 0) {
+        return res.status(404).json({ message: 'Aucun produit trouvé.' });
+    }
+
+      return res.render('sacemAndPrices', { products }); 
     } catch (error) {
       console.error("Erreur lors du chargement de la page Sacem & Tarifs", error);
       return next(new ApiError(500, "Erreur lors du chargement de la page Sacem & Tarifs"));
     }
   },
-  async getAllProduct(req, res, next) {
+  async getAllProducts(req, res, next) {
     try {
         const products = await Product.findAll();
 
@@ -30,5 +36,4 @@ const sacemController = {
 
 };
 
-  
-  export default sacemController;
+export default sacemController;
