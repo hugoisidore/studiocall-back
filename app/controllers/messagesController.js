@@ -1,4 +1,4 @@
-import Music from '../models/Music.js';
+import { Music } from '../models/Music.js';
 import ApiError from '../errors/ApiError.js';
 
 const messagesController = {
@@ -14,15 +14,21 @@ const messagesController = {
         return res.status(404).json({ message: 'Aucune catégorie trouvée.' });
       }
 
+      // Récupérez toutes les musiques (vous pouvez aussi filtrer si besoin)
+      const musics = await Music.findAll({
+        attributes: ['music_category', 'music_title', 'file_music'],
+      });
+
       console.log("Categories found:", categories);
+      console.log("Musics found:", musics);
+
       // Envoie les résultats au front-end
-      res.render('createStandard', { categories });
+      res.render('createStandard', { categories, musics }); // Passez également `musics`
     } catch (error) {
       console.error("Erreur lors de la récupération des catégories:", error);
       return next(new ApiError(500, "Erreur lors de la récupération des catégories"));
     }
   },
-
   async getCreateSmartphoneMessage(req, res, next) {
     try {
       res.render('createSmartphone', { 
