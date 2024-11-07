@@ -1,5 +1,7 @@
 import ApiError from '../errors/ApiError.js';
 import { Product } from "../models/Product.js";
+import { StandaloneProduct } from '../models/StandaloneProduct.js';
+import { GuidedProduct } from '../models/GuidedProduct.js';
 
 const sacemController = {
   async getSacemPage(req, res, next) {
@@ -32,8 +34,95 @@ const sacemController = {
         console.error("Erreur lors de la récupération des produits:", error);
         return next(new ApiError(500, "Erreur lors de la récupération des produits"));
     }
-  }
+  },
+  async getAllStandaloneProducts(req, res, next) {
+    try {
+        const standaloneProducts = await StandaloneProduct.findAll();
 
+        // Si aucun produit n'est trouvé
+        if (standaloneProducts.length === 0) {
+            return res.status(404).json({ message: 'Aucun produit trouvé.' });
+        }
+
+        console.log("Produits trouvés:", standaloneProducts);
+        // Envoie les résultats au front-end
+        res.render('productList', { standaloneProducts });
+    } catch (error) {
+        console.error("Erreur lors de la récupération des produits autonomes", error);
+        return next(new ApiError(500, "Erreur lors de la récupération des produits autonomes"));
+    }
+  },
+  async getAllGuidedProducts(req, res, next) {
+    try {
+        const guidedProducts = await GuidedProduct.findAll();
+
+        // Si aucun produit n'est trouvé
+        if (guidedProducts.length === 0) {
+            return res.status(404).json({ message: 'Aucun produit trouvé.' });
+        }
+
+        console.log("Produits trouvés:", guidedProducts);
+        // Envoie les résultats au front-end
+        res.render('productList', { guidedProducts });
+    } catch (error) {
+        console.error("Erreur lors de la récupération des produits guidés", error);
+        return next(new ApiError(500, "Erreur lors de la récupération des produits guidés"));
+    }
+  },
+  async getProductById(req, res, next) {
+    try {
+        const productId = req.params.id;
+        const product = await Product.findByPk(productId);
+
+        // Si aucun produit n'est trouvé
+        if (!product) {
+            return res.status(404).json({ message: 'Produit non trouvé.' });
+        }
+
+        console.log("Produit trouvé:", product);
+        // Envoie les résultats au front-end
+        res.render('productList', { product });
+    } catch (error) {
+        console.error("Erreur lors de la récupération du produit:", error);
+        return next(new ApiError(500, "Erreur lors de la récupération du produit"));
+    }
+  },
+  async getStandaloneProductById(req, res, next) {
+    try {
+        const productId = req.params.id;
+        const product = await Product.findByPk(productId);
+
+        // Si aucun produit n'est trouvé
+        if (!product) {
+            return res.status(404).json({ message: 'Produit non trouvé.' });
+        }
+
+        console.log("Produit trouvé:", product);
+        // Envoie les résultats au front-end
+        res.render('productList', { product });
+    } catch (error) {
+        console.error("Erreur lors de la récupération du produit:", error);
+        return next(new ApiError(500, "Erreur lors de la récupération du produit"));
+    }
+  },
+  async getGuidedProductById(req, res, next) {
+    try {
+        const productId = req.params.id;
+        const product = await Product.findByPk(productId);
+
+        // Si aucun produit n'est trouvé
+        if (!product) {
+            return res.status(404).json({ message: 'Produit non trouvé.' });
+        }
+
+        console.log("Produit trouvé:", product);
+        // Envoie les résultats au front-end
+        res.render('productList', { product });
+    } catch (error) {
+        console.error("Erreur lors de la récupération du produit:", error);
+        return next(new ApiError(500, "Erreur lors de la récupération du produit"));
+    }
+  }
 };
 
 export default sacemController;

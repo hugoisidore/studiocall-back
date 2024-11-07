@@ -6,7 +6,6 @@ import aboutRouter from "./about.router.js";
 import partnersRouter from "./partners.router.js";
 import advisorRouter from "./advisor.router.js";
 
-
 const router = express.Router();
 
 // header
@@ -18,6 +17,5 @@ router.use("/advisor", advisorRouter);
 
 // body
 router.use("/musics", musicsRouter);
-
 
 export default router;

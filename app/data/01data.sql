@@ -19,6 +19,26 @@ CREATE TABLE "user" (
     "updated_at" TIMESTAMPTZ
 );
 
+CREATE TABLE "standalone_product" (
+    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "standalone_product_name" TEXT NOT NULL,
+    "standalone_product_description" TEXT NOT NULL,
+    "standalone_product_price" TEXT NOT NULL,
+    "standalone_product_image" TEXT NULL,
+    "created_at" TIMESTAMPTZ NULL default(now()),
+    "updated_at" TIMESTAMPTZ NULL
+);
+
+CREATE TABLE "guided_product" (
+    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "guided_product_name" TEXT NOT NULL,
+    "guided_product_description" TEXT NOT NULL,
+    "guided_product_price" TEXT NOT NULL,
+    "guided_product_image" TEXT NULL,
+    "created_at" TIMESTAMPTZ NULL default(now()),
+    "updated_at" TIMESTAMPTZ NULL
+);
+
 CREATE TABLE "product" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "product_name" TEXT NOT NULL,
