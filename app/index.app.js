@@ -34,17 +34,16 @@ app.use('/assets', express.static(path.join(__dirname, "../../studiocall-front/s
 app.post('/send-email', async (req, res) => {
     const { company, email, phone, message } = req.body;
 
-    // Configuration du transporteur email pour o2switch
     let transporter = nodemailer.createTransport({
-        host: 'ssl0.ovh.net',
-        port: 465,
-        secure: true, // Utilisez SSL
+        host: 'diego.o2switch.net',
+        port: 465,          // Port sécurisé SSL
+        secure: true,       // Connexion sécurisée SSL
         auth: {
-            user: process.env.EMAIL_USER, 
-            pass: process.env.EMAIL_PASS 
+            user: process.env.EMAIL_USER,  // Votre email (contact@studiocall.fr)
+            pass: process.env.EMAIL_PASS   // Votre mot de passe d'application ou mot de passe principal
         },
-        logger: true,   // Ajoute un logger pour afficher des informations détaillées
-        debug: true 
+        authMethod: 'LOGIN',
+        logger: true,       // Activer le logger pour le débogage
     });
 
     // Configuration de l'email
