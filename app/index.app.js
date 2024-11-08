@@ -39,8 +39,8 @@ app.post('/send-email', async (req, res) => {
         port: 465,          // Port sécurisé SSL
         secure: true,       // Connexion sécurisée SSL
         auth: {
-            user: process.env.EMAIL_USER,  // Votre email (contact@studiocall.fr)
-            pass: process.env.EMAIL_PASS   // Votre mot de passe d'application ou mot de passe principal
+            user: process.env.EMAIL_USER,  
+            pass: process.env.EMAIL_PASS   
         },
         authMethod: 'LOGIN',
         logger: true,       // Activer le logger pour le débogage
@@ -51,7 +51,7 @@ app.post('/send-email', async (req, res) => {
         from: email,
         to: 'contact@studiocall.fr', // email de destination
         subject: `Nouveau message de ${company}`,
-        text: `Nom de la Société: ${company}\nEmail: ${email}\nTéléphone: ${phone}\n\nMessage:\n${message}`
+        text: `Nom de la Société : ${company}\nEmail : ${email}\nTéléphone : ${phone}\n\nMessage :\n${message}`
     };
 
     // Envoi de l'email
