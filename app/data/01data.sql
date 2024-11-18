@@ -30,6 +30,7 @@ CREATE TABLE "guided_product" (
     "updated_at" TIMESTAMPTZ NULL
 );
 
+
 CREATE TABLE "product" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "product_name" TEXT NOT NULL,

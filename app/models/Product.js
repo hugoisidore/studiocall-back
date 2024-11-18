@@ -1,3 +1,4 @@
+// Product.js
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "./sequelizeClient.js";
 
@@ -16,13 +17,12 @@ Product.init({
     allowNull: false,
   },
   product_image: {
-    type: DataTypes.TEXT,  
+    type: DataTypes.TEXT,
   }},
 {
   sequelize,
-  tableName:"product"
-    
+  tableName: "product"
 });
 
-export default Product; 
+export default Product;
 

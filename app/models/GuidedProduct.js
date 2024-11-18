@@ -16,12 +16,11 @@ GuidedProduct.init({
     allowNull: false,
   },
   guided_product_image: {
-    type: DataTypes.TEXT,  
+    type: DataTypes.TEXT,
   }},
 {
   sequelize,
-  tableName:"guided_product"
-    
+  tableName: "guided_product"
 });
 
 export default GuidedProduct; 
