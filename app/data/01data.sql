@@ -1,6 +1,6 @@
 BEGIN;
 
-DROP TABLE IF EXISTS "user", "password", "product", "form", "music", "text", "voice", "user_music", "user_text", "user_voice";
+DROP TABLE IF EXISTS "user", "password", "product", "guided_product" "form", "music", "text", "voice", "user_music", "user_text", "user_voice";
 
 CREATE TABLE "password" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -29,7 +29,6 @@ CREATE TABLE "guided_product" (
     "created_at" TIMESTAMPTZ NULL default(now()),
     "updated_at" TIMESTAMPTZ NULL
 );
-
 
 CREATE TABLE "product" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
