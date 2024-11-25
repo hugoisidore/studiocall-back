@@ -15,3 +15,5 @@ export const sequelize = new Sequelize(process.env.PG_URL, {
 // Test the connection
 await sequelize.authenticate();
 console.log('Connection to the database has been established successfully.');
+
+export default sequelize;

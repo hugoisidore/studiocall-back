@@ -13,8 +13,9 @@ const musicsController = {
     if (musics.length === 0) {
       return res.status(404).json({ message: 'Aucune musique trouvée pour cette catégorie.' });
     }
-    
+
     console.log("Musics found:", musics);
+
     // Envoie les résultats au front-end
     res.status(200).json(musics);
   }
