@@ -19,7 +19,7 @@ const sacemController = {
         return res.status(404).json({ message: 'Aucun produit trouvé.' });
       }
 
-      return res.render('sacemAndPrices', { products, guidedProducts });
+      return res.render('sacem', { products, guidedProducts });
     } catch (error) {
       console.error("Erreur lors du chargement de la page Sacem & Tarifs", error);
       return next(new ApiError(500, "Erreur lors du chargement de la page Sacem & Tarifs"));
