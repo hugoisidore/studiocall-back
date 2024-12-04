@@ -1,0 +1,56 @@
+[
+    {"Pré-décrochés ou SVI": [
+        {"id": 1, 
+        "name": "Pré-décroché 1", 
+        "template":"Bienvenue chez XXXX, nous allons donner suite à votre appel..."
+        },
+        {"id": 2,
+        "name": "Pré-décroché 2",
+        "template":"XXXX vous souhaite la bienvenue merci de patienter quelques instants nous allons vous répondre..."
+        },
+        {"id": 3,
+        "name": "Pré-décroché 3",
+        "template":"Bonjour et bienvenue à la societé XXXX, afin d’être dirigé vers le service de votre choix, tapez 1 pour joindre le service commercial... Tapez 2 pour joindre le SAV."
+        },
+        {"id": 4,
+        "name": "Pré-décroché 4",
+        "template":"Bonjour et bienvenue à la societé XXXX, pour mieux vous servir et être mis en relation avec votre interlocuteur, laissez vous guider. Pour le service commercial tapez 1, Pour le service administratif tapez 2..."
+        }
+    ]
+    },
+    {"Attentes téléphoniques": [
+        {"id": 1,
+        "name": "Attente téléphonique 1",
+        "template":"XXXX s'efforce d'écourter agréablement votre attente et vous prie de bien vouloir patienter quelques instants."
+        },
+        {"id": 2,
+        "name": "Attente téléphonique 2",
+        "template":"Vous êtes en relation avec XXXX. Tous nos conseillers sont actuellement en ligne. Nous vous demandons de bien vouloir patienter quelques instants. Merci."
+        },
+        {"id": 3,
+        "name": "Attente téléphonique 3",
+        "template":"Vous êtes en communication avec le service client de XXXX, nous mettons tout en oeuvre pour écourter votre attente."
+        }
+    ]
+    },
+    {"Répondeurs": [
+        {"id": 1,
+        "name": "Répondeur 1",
+        "template":"XXXX, Bienvenue, nous vous accueillons du lundi au vendredi de 9h à midi et de 14h00 à 19h. Merci de nous laisser un message en indiquant vos coordonnées, nous vous rappellerons dans les plus brefs délais.Au revoir et à bientôt !"
+        },
+        {"id": 2,
+        "name": "Répondeur 2",
+        "template":"Bienvenue, nous vous informons que l'accueil téléphonique de XXXX est actuellement fermé. Nous vous invitons à renouveler votre appel durant nos horaires d'ouverture du lundi au vendredi de ...à... Merci de votre appel et à bientôt."
+        },
+        {"id": 3,
+        "name": "Répondeur 3",
+        "template":"XXXX, Bienvenue, nos bureaux sont actuellement fermés, nous vous remercions de bien vouloir renouveler votre appel durant nos horaires d'ouverture du lundi au vendredi de ...à... Merci de votre appel et à bientôt."
+        },
+        {"id": 4,
+        "name": "Répondeur 4",
+        "template":"En raison d’un grand nombre d’appels nos conseillers ne peuvent vous répondre actuellement, nous vous invitons à nous recontacter ultérieurement merci et à bientôt."
+        }
+    ]
+    }
+]
+    
