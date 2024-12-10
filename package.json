@@ -23,6 +23,7 @@
     "swagger": "^0.7.5",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
+    "sweetalert": "^2.1.2",
     "webdav": "^5.7.1"
   },
   "keywords": [],
