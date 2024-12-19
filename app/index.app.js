@@ -54,7 +54,7 @@ app.post("/send-email", async (req, res) => {
     adress,
     zip_code,
     town,
-    orderSummary,
+    orderSummary, // résumé de la commande
     total,
   } = req.body;
 
