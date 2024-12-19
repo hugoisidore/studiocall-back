@@ -4,8 +4,8 @@ import express from "express";
 import { initSwagger } from "./services/swagger.js";
 import router from "./routers/index.router.js";
 import cors from "cors";
-import path from "path";
-import { fileURLToPath } from "url";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import nodemailer from "nodemailer";
 
 //Recréer __dirname dans un module ES
@@ -59,7 +59,7 @@ app.post("/send-email", async (req, res) => {
   } = req.body;
 
   // On configure le transporteur
-  let transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     host: "diego.o2switch.net",
     port: 465, // Port sécurisé SSL
     secure: true, // Connexion sécurisée SSL
@@ -72,7 +72,9 @@ app.post("/send-email", async (req, res) => {
   });
 
   // Variables pour les emails à envoyer
-  let subject, text, htmlContent;
+  let subject;
+  let text;
+  let htmlContent;
 
   // Différenciantion des 3 formulaires
   if (formType === "contactForm1") {
