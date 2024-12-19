@@ -57,6 +57,26 @@ app.post("/send-email", async (req, res) => {
     orderSummary,
     total,
   } = req.body;
+app.post('/send-email', async (req, res) => {
+    const { company, email, phone, 
+            formType, telephone, nom_interlocuteur, 
+            reference_dossier, nom_entreprise, adresse_postale, 
+            nom_installateur, nom_interlocuteur_studiocall, operator, 
+            adress, zip_code, town, recapMessages } = req.body;
+
+            console.log('Données reçues :', req.body);
+            console.log('Messages reçus :', req.body.messages);
+    
+     // On vérifie si recapMessages existe et si c'est une chaîne JSON valide
+     let recapData = {};
+     if (recapMessages) {
+         try {
+             recapData = JSON.parse(recapMessages);  // Parser la chaîne JSON
+             console.log('Données de recapMessages:', recapData);
+         } catch (e) {
+             console.error('Erreur lors du parsing de recapMessages:', e);
+         }
+     }
 
   // On configure le transporteur
   const transporter = nodemailer.createTransport({
@@ -143,6 +163,26 @@ app.post("/send-email", async (req, res) => {
       </div>
     `;
   } else {
+    Interlocuteur StudioCall : ${nom_interlocuteur_studiocall || 'Non fourni'}
+    
+    Détails des messages :`;
+
+    // Vérification et ajout des messages
+    if (Array.isArray(recapData.messages)) {
+        recapData.messages.forEach((message, index) => {
+            const content = message.content || 'Aucun contenu rédigé';
+            text += `\n\nMessage ${index + 1} :
+            - Type : ${message.type}
+            - Musique : ${message.music}
+            - Voix : ${message.voice}
+            - Contenu : ${content}`;
+        });
+    } else {
+        text += `\n\nAucun message ajouté.`;
+    }
+
+} else {
+
     // Si aucun formType valide n'est trouvé
     return res.status(400).json({ message: "Type de formulaire inconnu." });
   }
