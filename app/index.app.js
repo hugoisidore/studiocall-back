@@ -116,9 +116,8 @@ app.post("/send-email", async (req, res) => {
         <p style="margin: 5px 0;"><strong>Nom et Prénom :</strong> ${nom_interlocuteur}</p>
         <p style="margin: 5px 0;"><strong>Email :</strong> ${email}</p>
         <p style="margin: 5px 0;"><strong>Téléphone :</strong> ${phone}</p>
-        <p style="margin: 5px 0;"><strong>Organisation :</strong> ${company}</p>
+        <p style="margin: 5px 0;"><strong>Entreprise :</strong> ${company}</p>
         <p style="margin: 5px 0;"><strong>Code postal :</strong> ${zip_code}</p>
-        <p style="margin: 5px 0;"><strong>Ville :</strong> ${town}</p>
         
         <h3 style="color: #555; margin-top: 20px;">Résumé de la commande :</h3>
         <ul style="list-style-type: none; padding: 0; margin: 10px 0; font-size: 14px;">
@@ -126,7 +125,7 @@ app.post("/send-email", async (req, res) => {
             .split("<br>")
             .map(
               (item) =>
-                `<li style="padding: 4px 0; border-bottom: 1px solid #ddd;">${item} HT</li>`
+                `<li style="padding: 4px 0; border-bottom: 1px solid #ddd;">${item}</li>`
             )
             .join("")}
         </ul>
