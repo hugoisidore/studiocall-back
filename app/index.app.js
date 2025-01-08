@@ -118,7 +118,7 @@ app.post("/send-email", async (req, res) => {
         <p style="margin: 5px 0;"><strong>Téléphone :</strong> ${phone}</p>
         <p style="margin: 5px 0;"><strong>Entreprise :</strong> ${company}</p>
         <p style="margin: 5px 0;"><strong>Code postal :</strong> ${zip_code}</p>
-        
+
         <h3 style="color: #555; margin-top: 20px;">Résumé de la commande :</h3>
         <ul style="list-style-type: none; padding: 0; margin: 10px 0; font-size: 14px;">
           ${orderSummary
@@ -129,13 +129,13 @@ app.post("/send-email", async (req, res) => {
             )
             .join("")}
         </ul>
-        
+
         <p style="font-size: 1.1em; color: #333; text-align: center; margin: 15px 0;">
           <strong>Total : ${total} € HT</strong>
         </p>
-        
+
         <hr style="border: 1px solid #d63384; margin: 20px 0;">
-        
+
         <p style="color: #555; font-size: 14px; text-align: center;">
           Merci pour votre confiance. Nous reviendrons vers vous rapidement.
         </p>
