@@ -99,14 +99,14 @@ app.post("/send-email", async (req, res) => {
 
   } else if (formType === "contactForm2") {
     // Formulaire 2 de création de message standard
-    subject = `Demande de Création de Message Standard de ${clientName}`;
+    subject = 'Votre demande Studiocall';
 
     htmlContent = `
       <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
 
         <!-- Header Section -->
         <div style="text-align: center; margin-bottom: 20px;">
-          <h2 style="color: #d63384; font-size: 24px;">Demande de Création de Message Standard</h2>
+          <h2 style="color: #d63384; font-size: 24px;">Demande de Création Ligne fixe</h2>
         </div>
 
         <!-- Client Information Section -->
@@ -117,10 +117,10 @@ app.post("/send-email", async (req, res) => {
             <p><strong>Entreprise:</strong> ${company}</p>
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Téléphone:</strong> ${phone}</p>
-            <p><strong>Référence dossier:</strong> ${fileReference}</p>
+            <p><strong>Référence dossier:</strong> ${fileReference || 'Non fourni'}</p>
             <p><strong>Adresse postale:</strong> ${address}</p>
-            <p><strong>Installateur:</strong> ${installerName}</p>
-            <p><strong>Interlocuteur StudioCall:</strong> ${studiocallInterName}</p>
+            <p><strong>Installateur:</strong> ${installerName || 'Non fourni'}</p>
+            <p><strong>Interlocuteur StudioCall:</strong> ${studiocallInterName || 'Non fourni'}</p>
           </div>
         </div>
 
@@ -134,7 +134,8 @@ app.post("/send-email", async (req, res) => {
                 <p><strong>Type de message:</strong> ${item.checkboxText || 'Non défini'}</p>
                 <p><strong>Musique:</strong> ${item.musicTitle || 'Aucune musique'}</p>
                 <p><strong>Voix:</strong> ${item.voiceTitle || 'Aucune voix'}</p>
-                <p><strong>Message personnalisé:</strong> ${item.textareaContent || 'Aucun texte saisi'}</p>
+                <p><strong>Message personnalisé:</strong> ${item.textareaContent1 || 'Aucun texte saisi dans le premier champ'}</p>
+                <p><strong>Précisions phonétiques:</strong> ${item.textareaContent2 || 'Aucune précision phonétique saisie'}</p>
               </li>`).join('')}
           </ul>
         </div>
@@ -150,7 +151,7 @@ app.post("/send-email", async (req, res) => {
 
   } else if (formType === "contactForm3") {
     // Formulaire 3 de création de message mobile
-    subject = `Demande de Création de Message Mobile de ${clientName}`;
+    subject = 'Votre demande Studiocall';
     htmlContent = `
         <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
 
@@ -166,11 +167,11 @@ app.post("/send-email", async (req, res) => {
             <p><strong>Nom et prénom:</strong> ${clientName}</p>
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Téléphone:</strong> ${phone}</p>
-            <p><strong>Opérateur:</strong> ${operator}</p>
+            <p><strong>Opérateur:</strong> ${operator || 'Non fourni'}</p>
             <p><strong>Adresse postale:</strong> ${address}</p>
             <p><strong>Code postal:</strong> ${zipCode}</p>
             <p><strong>Ville:</strong> ${city}</p>
-            <p><strong>Interlocuteur StudioCall:</strong> ${studiocallInterName}</p>
+            <p><strong>Interlocuteur StudioCall:</strong> ${studiocallInterName || 'Non fourni'}</p>
           </div>
         </div>
 
@@ -184,7 +185,8 @@ app.post("/send-email", async (req, res) => {
                 <p><strong>Type de message:</strong> ${item.checkboxText || 'Non défini'}</p>
                 <p><strong>Musique:</strong> ${item.musicTitle || 'Aucune musique'}</p>
                 <p><strong>Voix:</strong> ${item.voiceTitle || 'Aucune voix'}</p>
-                <p><strong>Message personnalisé:</strong> ${item.textareaContent || 'Aucun texte saisi'}</p>
+                <p><strong>Message personnalisé:</strong> ${item.textareaContent1 || 'Aucun texte saisi dans le premier champ'}</p>
+                <p><strong>Précisions phonétiques:</strong> ${item.textareaContent2 || 'Aucune précision phonétique saisie'}</p>
               </li>`).join('')}
           </ul>
         </div>
