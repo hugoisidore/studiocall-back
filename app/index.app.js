@@ -55,6 +55,8 @@ app.post("/send-email", async (req, res) => {
     messageItems,
   } = req.body;
 
+  const clientStatus = isClient === 'oui' ? 'oui' : 'non';  // S'assurer de la valeur correcte
+
   // Parser messageItems s'il est reçu comme une chaîne
   const parsedMessageItems = typeof messageItems === 'string'
     ? JSON.parse(messageItems)
@@ -85,7 +87,7 @@ app.post("/send-email", async (req, res) => {
         <p><strong>Nom de famille:</strong> ${familyname}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Téléphone:</strong> ${phone}</p>
-        <p><strong>Statut client:</strong> ${isClient ? 'non' : 'oui'}</p>
+        <p><strong>Statut client:</strong> ${clientStatus}</p>
       </div>
     </div>
 
@@ -274,7 +276,8 @@ app.post("/send-email", async (req, res) => {
   // Configuration de l'email
   const mailOptions = {
     from: email,
-    to: `${email}, contact@studiocall.fr`, // email de destination
+    // to: `${email}`,
+    to: `${email}, contact@studiocall.fr`,
     subject,
     html: htmlContent,
   };
